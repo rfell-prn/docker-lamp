@@ -11,6 +11,13 @@ services:
       - "443:443"
     links: 
       - mysql
+    environment:
+      - MYSQL_HOST
+      - MYSQL_ROOT_USERNAME
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_USERNAME
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE  
     volumes: 
       - ${DOCUMENT_ROOT-./www}:/var/www/html
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
@@ -26,10 +33,10 @@ services:
       - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
       - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: superSecurePassword12345!! 
-      MYSQL_DATABASE: database_name 
-      MYSQL_USER: database_username 
-      MYSQL_PASSWORD: superSecurePassword12345!! 
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER=${MYSQL_USERNAME}
+      - MYSQL_PASSWORD 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: 'werkn-phpmyadmin'
