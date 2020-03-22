@@ -27,7 +27,7 @@ cp ./../test-database-connection.php .
 if [[ -e $(basename ${1})/README.md ]]; 
 then 
 	echo "Dumping README.md docker-post-install-msg for repo ($1)"
-	cat bookmark-app/README.md | grep 'docker-post-install-msg' | sed -n "s/^.*'\(.*\)'.*$/\1/ p"
+	cat $(basename ${1})/README.md | grep 'docker-post-install-msg' | sed -n "s/^.*'\(.*\)'.*$/\1/ p"
 fi
 
 cd ..
