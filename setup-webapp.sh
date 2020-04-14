@@ -40,4 +40,6 @@ set -a
 source .env
 
 # bring up docker containers + app
-docker-compose up -d
+docker-compose up -d ; 
+docker cp ./bin/webserver/apache2/build-sites-enabled-confs.sh werkn-apache-webserver:/etc/apache2/ ;
+docker exec -it werkn-apache-webserver bash /etc/apache2/build-sites-enabled-confs.sh
