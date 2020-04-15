@@ -27,7 +27,7 @@ cp ./../test-database-connection.php .
 if [[ -e $(basename ${1})/README.md ]]; 
 then 
 	echo "Dumping README.md docker-post-install-msg for repo ($1)"
-	cat bookmark-app/README.md | grep 'docker-post-install-msg' | sed -n "s/^.*'\(.*\)'.*$/\1/ p"
+	cat $(basename ${1})/README.md | grep 'docker-post-install-msg' | sed -n "s/^.*'\(.*\)'.*$/\1/ p"
 fi
 
 cd ..
@@ -41,3 +41,5 @@ source .env
 
 # bring up docker containers + app
 sudo docker-compose up -d
+sudo docker cp ./bin/webserver/apache2/build-sites-enabled-confs.sh werkn-apache-webserver:/etc/apache2/ ;
+sudo docker exec -it werkn-apache-webserver bash /etc/apache2/build-sites-enabled-confs.sh
