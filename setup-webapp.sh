@@ -6,7 +6,7 @@
 if [[ "$2" == "--nuke" ]]; 
 then 
 	echo "Nuking current installation..."
-	docker rm -f $(docker ps -a -q);
+	sudo docker rm -f $(sudo docker ps -a -q);
 	rm -Rf data
 	rm -Rf logs
 	rm -Rf www
@@ -40,4 +40,4 @@ set -a
 source .env
 
 # bring up docker containers + app
-docker-compose up -d
+sudo docker-compose up -d
