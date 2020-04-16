@@ -16,6 +16,8 @@ fi
 mkdir data ; mkdir data/mysql 
 mkdir logs ; mkdir logs/mysql; mkdir logs/apache2; mkdir logs/php
 mkdir www ; cd www
+
+#clone repo
 git clone $1 
 
 #copy our test_database_connection.php
@@ -43,11 +45,11 @@ source .env
 sudo docker-compose up -d
 
 #make sure our web app is owned by www-data (fix for upload folder permissions)
-sudo docker cp ./bin/webserver/apache2/configure-permissions.sh werkn-apache-webserver:/etc/apache2/ ;
+sudo docker cp ./bin/webserver/apache2/configure-permissions.sh werkn-apache-webserver:/etc/apache2/ 
 
 #copy into web server config script for .htpasswd
-sudo docker cp ./bin/webserver/apache2/build-sites-enabled-confs.sh werkn-apache-webserver:/etc/apache2/ ;
+sudo docker cp ./bin/webserver/apache2/build-sites-enabled-confs.sh werkn-apache-webserver:/etc/apache2/ 
 
 #run script in interactive shell
-sudo docker exec werkn-apache-webserver bash /etc/apache2/configure-permissions.sh
+sudo docker exec -it werkn-apache-webserver bash /etc/apache2/configure-permissions.sh
 sudo docker exec -it werkn-apache-webserver bash /etc/apache2/build-sites-enabled-confs.sh
