@@ -15,6 +15,9 @@ then
     htpasswd -c /etc/apache2/.htpasswd ${htuser}
 fi
 
+#stop apache so we can remove existing sites-enabled
+service apache2 stop
+
 #remove any existing confs from /etc/apache2/sites-enabled
 rm -Rf /etc/apache2/sites-enabled
 
