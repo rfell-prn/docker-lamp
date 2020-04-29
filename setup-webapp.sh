@@ -20,21 +20,29 @@ mkdir www ; cd www
 #clone repo
 git clone $1 
 
-#copy our test_database_connection.php
-cp ./../test-database-connection.php .
+#get our folder name
+repoFolderName=$(basename ${1})
+
+#change into our www dir
+#all dockerized apps use branch docker-setup,
+#check that branch out
+cd ${repoFolderName} 
+git checkout docker-setup
 
 #dump the readme to the console if it exists in the repo specifically we use an html comment
 #to communicate post config operations when using docker
 #ie: somewhere in your readme add #docker-post-install-msg: YOUR MESSAGE HERE, URL, ETC...
-if [[ -e $(basename ${1})/README.md ]]; 
+if [[ -e README.md ]]; 
 then 
 	echo "Dumping README.md docker-post-install-msg for repo ($1)"
-	cat $(basename ${1})/README.md | grep 'docker-post-install-msg' | sed -n "s/^.*'\(.*\)'.*$/\1/ p"
+	cat README.md | grep 'docker-post-install-msg' | sed -n "s/^.*'\(.*\)'.*$/\1/ p"
 fi
 
-cd ..
+cd ../..
 
 echo "Bringup up LAMP stack + installed web app for ($1)"
+
+pwd
 
 # set environment variables for export
 set -a
@@ -43,6 +51,17 @@ source .env
 
 # bring up docker containers + app
 sudo docker-compose up -d
+
+# make sure container is running before proceeding
+echo "Waiting for docker containers to come up before proceeding..."
+sleep 20s
+
+#if www/appname has a install.sh, run it it contains post config scripts
+if [[ -e ./www/${repoFolderName}/install.sh ]]; 
+then 
+	echo "Running post install script for app: $(basename ${1})" 
+	sudo docker exec -it werkn-apache-webserver bash /var/www/html/${repoFolderName}/install.sh
+fi
 
 #make sure our web app is owned by www-data (fix for upload folder permissions)
 sudo docker cp ./bin/webserver/apache2/configure-permissions.sh werkn-apache-webserver:/etc/apache2/ 
