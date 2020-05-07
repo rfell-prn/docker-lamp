@@ -1,8 +1,10 @@
 #!/bin/bash
 #@author: werkn / werkncode.com / github.com/werkn
-# Script generates a .htpasswd file (user + pass) 
+# Script generates a .htpasswd file (user + pass)
 # and configures virtual host based on environment variables
 # set in .env
+
+
 
 #setup initial password file
 read -p "Configure .htpasswd password protection?  ([Yy]es or [Nn]o)" -n 1 -r
