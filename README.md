@@ -9,13 +9,15 @@ You can use either Docker Desktop or stand up your own Docker server with Docker
 Be sure to update `.env` with the proper credentials and names
 for your database users, database name, and database passwords.
 
+**Note:** DO NOT append `.git` to your repo name
+
 **Deployment**:
 
-`bash setup-webapp.php http://github.com/your-repo.git`
+`bash setup-webapp.php http://github.com/your-repo`
 
 **Re-deploy over your existing app (this will destory everything)**:
 
-`bash setup-webapp.php http://github.com/your-repo.git --nuke`
+`bash setup-webapp.php http://github.com/your-repo --nuke`
 
 **Erase everything (this will destroy everything)**:
 
