@@ -6,9 +6,9 @@
 if [[ "$2" == "--nuke" ]];
 then
 	echo "Nuking current installation..."
-    sudo docker rm -f  werkn-apache-webserver
-    sudo docker rm -f  werkn-mysql
-    sudo docker rm -f  werkn-phpmyadmin
+    	sudo docker rm -f  werkn-apache-webserver
+    	sudo docker rm -f  werkn-mysql
+    	sudo docker rm -f  werkn-phpmyadmin
 	rm -Rf data
 	rm -Rf logs
 	rm -Rf www
