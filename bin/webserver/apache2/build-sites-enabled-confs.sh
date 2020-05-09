@@ -1,6 +1,6 @@
 #!/bin/bash
 #@author: werkn / werkncode.com / github.com/werkn
-# Script generates a .htpasswd file (user + pass) 
+# Script generates a .htpasswd file (user + pass)
 # and configures virtual host based on environment variables
 # set in .env
 
@@ -13,19 +13,9 @@ then
     read htuser
     echo #move cursor to newline
     htpasswd -c /etc/apache2/.htpasswd ${htuser}
-fi
-
-#stop apache so we can remove existing sites-enabled
-service apache2 stop
-
-#remove any existing confs from /etc/apache2/sites-enabled
-rm -Rf /etc/apache2/sites-enabled
-
-if [[ -e /etc/apache2/.htpasswd ]]
-then
-
-#setup sites-enabled + auth
-bash -c "cat >> /etc/apache2/sites-enabled/000-default.conf" << EOF
+    
+    #setup sites-enabled + auth
+    bash -c "cat > /etc/apache2/sites-enabled/000-default.conf" << EOF
 <VirtualHost *:80>
     ServerAdmin $APACHE_SERVER_ADMIN_EMAIL
     DocumentRoot $APACHE_DOCUMENT_ROOT
@@ -41,8 +31,8 @@ EOF
 
 else
 
-#setup sites-enabled, no auth
-bash -c "cat >> /etc/apache2/sites-enabled/000-default.conf" << EOF
+    #setup sites-enabled, no auth
+    bash -c "cat > /etc/apache2/sites-enabled/000-default.conf" << EOF
 <VirtualHost *:80>
     ServerAdmin $APACHE_SERVER_ADMIN_EMAIL
     DocumentRoot $APACHE_DOCUMENT_ROOT
